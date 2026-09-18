@@ -19,16 +19,23 @@ class TribunalController {
     required this.judgeExcuseUseCase,
   });
 
-  Future<void> judge({
+  Future<Verdict?> judge({
+    required String accusation,
     required String excuse,
   }) async {
+    final normalizedAccusation = accusation.trim();
     final normalizedExcuse = excuse.trim();
 
-    if (normalizedExcuse.isEmpty) {
-      errorMessage.value =
-          'Digite uma desculpa antes de continuar.';
+    if (normalizedAccusation.isEmpty) {
+      errorMessage.value = 'Informe a acusação antes de continuar.';
       verdict.value = null;
-      return;
+      return null;
+    }
+
+    if (normalizedExcuse.isEmpty) {
+      errorMessage.value = 'Informe sua defesa antes de continuar.';
+      verdict.value = null;
+      return null;
     }
 
     isLoading.value = true;
@@ -37,13 +44,16 @@ class TribunalController {
 
     try {
       final result = await judgeExcuseUseCase(
+        accusation: normalizedAccusation,
         excuse: normalizedExcuse,
       );
 
       verdict.value = result;
+      return result;
     } on Exception catch (exception) {
       errorMessage.value = exception.toString();
       verdict.value = null;
+      return null;
     } finally {
       isLoading.value = false;
     }

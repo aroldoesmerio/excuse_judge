@@ -66,6 +66,33 @@ class ExcuseJudgeApp extends StatelessWidget {
             ),
           ),
         ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            foregroundColor: const Color(0xFF5A3E2B),
+            side: const BorderSide(
+              color: Color(0xFF5A3E2B),
+              width: 1.5,
+            ),
+            minimumSize: const Size.fromHeight(50),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+          ),
+        ),
+        chipTheme: ChipThemeData(
+          backgroundColor: const Color(0xFFFFFCF7),
+          side: const BorderSide(
+            color: Color(0xFFD8CDBD),
+          ),
+          labelStyle: const TextStyle(
+            color: Color(0xFF5A3E2B),
+            fontSize: 13,
+            fontWeight: FontWeight.w500,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
         useMaterial3: true,
       ),
       home: const TribunalPage(),

@@ -4,6 +4,7 @@ import '../../domain/repositories/verdict_repository.dart';
 class MockVerdictRepository implements VerdictRepository {
   @override
   Future<Verdict> judge({
+    required String accusation,
     required String excuse,
   }) async {
     await Future<void>.delayed(

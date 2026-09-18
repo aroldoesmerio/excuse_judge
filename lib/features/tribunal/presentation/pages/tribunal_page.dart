@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../data/repositories/mock_verdict_repository.dart';
-import '../../domain/entities/verdict.dart';
 import '../../domain/usecases/judge_excuse_usecase.dart';
 import '../controllers/tribunal_controller.dart';
 import '../widgets/excuse_input.dart';
 import '../widgets/tribunal_header.dart';
-import '../widgets/verdict_card.dart';
+import 'verdict_page.dart';
 
 class TribunalPage extends StatefulWidget {
   const TribunalPage({
@@ -18,6 +17,7 @@ class TribunalPage extends StatefulWidget {
 }
 
 class _TribunalPageState extends State<TribunalPage> {
+  late final TextEditingController _accusationController;
   late final TextEditingController _excuseController;
   late final TribunalController _tribunalController;
 
@@ -25,6 +25,7 @@ class _TribunalPageState extends State<TribunalPage> {
   void initState() {
     super.initState();
 
+    _accusationController = TextEditingController();
     _excuseController = TextEditingController();
 
     final repository = MockVerdictRepository();
@@ -40,16 +41,38 @@ class _TribunalPageState extends State<TribunalPage> {
 
   @override
   void dispose() {
+    _accusationController.dispose();
     _excuseController.dispose();
     _tribunalController.dispose();
 
     super.dispose();
   }
 
-  Future<void> _judgeExcuse() async {
-    await _tribunalController.judge(
+  Future<void> _judgeCase() async {
+    final verdict = await _tribunalController.judge(
+      accusation: _accusationController.text,
       excuse: _excuseController.text,
     );
+
+    if (verdict != null && mounted) {
+      await Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (_) => VerdictPage(
+            verdict: verdict,
+          ),
+        ),
+      );
+
+      if (mounted) {
+        _resetCase();
+      }
+    }
+  }
+
+  void _resetCase() {
+    _accusationController.clear();
+    _excuseController.clear();
+    _tribunalController.reset();
   }
 
   @override
@@ -83,11 +106,12 @@ class _TribunalPageState extends State<TribunalPage> {
                           const TribunalHeader(),
                           const SizedBox(height: 32),
                           ExcuseInput(
-                            controller: _excuseController,
+                            accusationController: _accusationController,
+                            excuseController: _excuseController,
                             isLoading: isLoading,
-                            onJudge: _judgeExcuse,
+                            onJudge: _judgeCase,
                           ),
-                          const SizedBox(height: 24),
+                          const SizedBox(height: 16),
                           ValueListenableBuilder<String?>(
                             valueListenable:
                                 _tribunalController.errorMessage,
@@ -107,25 +131,8 @@ class _TribunalPageState extends State<TribunalPage> {
                                   color: Theme.of(context)
                                       .colorScheme
                                       .error,
+                                  fontWeight: FontWeight.w500,
                                 ),
-                              );
-                            },
-                          ),
-                          const SizedBox(height: 24),
-                          ValueListenableBuilder<Verdict?>(
-                            valueListenable:
-                                _tribunalController.verdict,
-                            builder: (
-                              context,
-                              verdict,
-                              _,
-                            ) {
-                              if (verdict == null) {
-                                return const SizedBox.shrink();
-                              }
-
-                              return VerdictCard(
-                                verdict: verdict,
                               );
                             },
                           ),
