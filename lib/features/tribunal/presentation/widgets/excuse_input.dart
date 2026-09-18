@@ -20,12 +20,13 @@ class ExcuseInput extends StatelessWidget {
         TextField(
           controller: controller,
           enabled: !isLoading,
-          minLines: 4,
-          maxLines: 6,
+          minLines: 5,
+          maxLines: 8,
           decoration: const InputDecoration(
-            labelText: 'Qual é a sua desculpa?',
-            hintText: 'Digite aqui a sua justificativa...',
-            border: OutlineInputBorder(),
+            labelText: 'Apresente sua defesa',
+            hintText:
+                'Ex.: Eu ia fazer, mas o universo conspirou contra mim...',
+            prefixIcon: Icon(Icons.balance),
           ),
         ),
         const SizedBox(height: 16),
@@ -41,7 +42,9 @@ class ExcuseInput extends StatelessWidget {
                 )
               : const Icon(Icons.gavel),
           label: Text(
-            isLoading ? 'Analisando...' : 'JULGAR',
+            isLoading
+                ? 'O tribunal está analisando...'
+                : 'JULGAR MINHA DESCULPA',
           ),
         ),
       ],

@@ -17,8 +17,54 @@ class ExcuseJudgeApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Tribunal das Desculpas',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
+        colorScheme: const ColorScheme.light(
+          primary: Color(0xFF5A3E2B),
+          secondary: Color(0xFFD6A84F),
+          surface: Color(0xFFFFFCF7),
+        ),
+        scaffoldBackgroundColor: const Color(0xFFF7F3EA),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFFF7F3EA),
+          foregroundColor: Color(0xFF5A3E2B),
+          centerTitle: true,
+        ),
+        cardTheme: CardThemeData(
+          color: const Color(0xFFFFFCF7),
+          elevation: 3,
+          shadowColor: const Color(0x335A3E2B),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: const Color(0xFFFFFCF7),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16),
+            borderSide: const BorderSide(
+              color: Color(0xFFD8CDBD),
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16),
+            borderSide: const BorderSide(
+              color: Color(0xFF5A3E2B),
+              width: 2,
+            ),
+          ),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFF5A3E2B),
+            foregroundColor: Colors.white,
+            minimumSize: const Size.fromHeight(52),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+          ),
         ),
         useMaterial3: true,
       ),

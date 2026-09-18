@@ -20,7 +20,18 @@ class TribunalHeader extends StatelessWidget {
         Text(
           'Tribunal das Desculpas',
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.headlineMedium,
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                color: Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.bold,
+              ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          'Apresente sua defesa. O tribunal está pronto para julgar.',
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
         ),
       ],
     );

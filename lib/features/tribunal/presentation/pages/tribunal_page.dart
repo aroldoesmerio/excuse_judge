@@ -58,79 +58,86 @@ class _TribunalPageState extends State<TribunalPage> {
       appBar: AppBar(
         title: const Text('Tribunal das Desculpas'),
       ),
-      body: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: 600,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: ValueListenableBuilder<bool>(
-              valueListenable: _tribunalController.isLoading,
-              builder: (
-                context,
-                isLoading,
-                _,
-              ) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const TribunalHeader(),
-                    const SizedBox(height: 32),
-                    ExcuseInput(
-                      controller: _excuseController,
-                      isLoading: isLoading,
-                      onJudge: _judgeExcuse,
-                    ),
-                    const SizedBox(height: 24),
-                    ValueListenableBuilder<String?>(
-                      valueListenable:
-                          _tribunalController.errorMessage,
-                      builder: (
-                        context,
-                        errorMessage,
-                        _,
-                      ) {
-                        if (errorMessage == null) {
-                          return const SizedBox.shrink();
-                        }
-
-                        return Text(
-                          errorMessage,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .error,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: 600,
+                  minHeight: constraints.maxHeight,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: ValueListenableBuilder<bool>(
+                    valueListenable: _tribunalController.isLoading,
+                    builder: (
+                      context,
+                      isLoading,
+                      _,
+                    ) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const TribunalHeader(),
+                          const SizedBox(height: 32),
+                          ExcuseInput(
+                            controller: _excuseController,
+                            isLoading: isLoading,
+                            onJudge: _judgeExcuse,
                           ),
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 24),
-                    ValueListenableBuilder<Verdict?>(
-                      valueListenable:
-                          _tribunalController.verdict,
-                      builder: (
-                        context,
-                        verdict,
-                        _,
-                      ) {
-                        if (verdict == null) {
-                          return const SizedBox.shrink();
-                        }
+                          const SizedBox(height: 24),
+                          ValueListenableBuilder<String?>(
+                            valueListenable:
+                                _tribunalController.errorMessage,
+                            builder: (
+                              context,
+                              errorMessage,
+                              _,
+                            ) {
+                              if (errorMessage == null) {
+                                return const SizedBox.shrink();
+                              }
 
-                        return VerdictCard(
-                          verdict: verdict,
-                        );
-                      },
-                    ),
-                  ],
-                );
-              },
+                              return Text(
+                                errorMessage,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .error,
+                                ),
+                              );
+                            },
+                          ),
+                          const SizedBox(height: 24),
+                          ValueListenableBuilder<Verdict?>(
+                            valueListenable:
+                                _tribunalController.verdict,
+                            builder: (
+                              context,
+                              verdict,
+                              _,
+                            ) {
+                              if (verdict == null) {
+                                return const SizedBox.shrink();
+                              }
+
+                              return VerdictCard(
+                                verdict: verdict,
+                              );
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
