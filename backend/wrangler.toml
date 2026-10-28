@@ -1,0 +1,9 @@
+name = "excuse-judge-backend"
+main = "src/index.ts"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+# Secrets necessários para o Worker em produção.
+# Nunca colocar valores aqui — usar `wrangler secret put GEMINI_API_KEY`.
+[secrets]
+required = ["GEMINI_API_KEY"]

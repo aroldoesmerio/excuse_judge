@@ -1,0 +1,21 @@
+{
+  "name": "excuse-judge-backend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261007.1",
+    "typescript": "^5.5.4",
+    "vitest": "^2.1.8",
+    "wrangler": "^4.148.0"
+  },
+  "allowScripts": {
+    "workerd@1.20261006.1": true,
+    "esbuild@0.21.5": true
+  }
+}
